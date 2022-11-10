@@ -152,19 +152,13 @@ describe('utils/config', () => {
     it('is used if there is no config file', () => {
       return getConfig({ project }).then((config) => {
         let scenarios = config.scenarios;
-        expect(scenarios.length).to.equal(5);
+        expect(scenarios.length).to.equal(1);
         expect(scenarios).to.include.deep.members([
-          { name: 'default', npm: { devDependencies: {} } },
           {
             name: 'ember-2.18.0',
             npm: { devDependencies: { 'ember-source': '2.18.0' } },
           },
         ]);
-
-        let scenarioNames = scenarios.map((s) => {
-          return s.name;
-        });
-        expect(scenarioNames).to.include.members(['ember-beta', 'ember-release', 'ember-canary']);
       });
     });
 
@@ -172,9 +166,8 @@ describe('utils/config', () => {
       generateConfigFile('module.exports = { scenarios: [ { foo: "bar" }] };');
       return getConfig({ project, versionCompatibility: { ember: '2.18.0' } }).then((config) => {
         let scenarios = config.scenarios;
-        expect(scenarios.length).to.equal(6);
+        expect(scenarios.length).to.equal(2);
         expect(scenarios).to.include.deep.members([
-          { name: 'default', npm: { devDependencies: {} } },
           {
             name: 'ember-2.18.0',
             npm: { devDependencies: { 'ember-source': '2.18.0' } },
@@ -187,9 +180,8 @@ describe('utils/config', () => {
     it('can be overridden by passed in versionCompatibility', () => {
       return getConfig({ project, versionCompatibility: { ember: '2.18.0' } }).then((config) => {
         let scenarios = config.scenarios;
-        expect(scenarios.length).to.equal(5);
+        expect(scenarios.length).to.equal(1);
         expect(scenarios).to.include.deep.members([
-          { name: 'default', npm: { devDependencies: {} } },
           {
             name: 'ember-2.18.0',
             npm: { devDependencies: { 'ember-source': '2.18.0' } },
@@ -211,7 +203,7 @@ describe('utils/config', () => {
       generateConfigFile('module.exports = { npmOptions: ["--some-thing=true"] };');
       return getConfig({ project }).then((config) => {
         expect(config.npmOptions).to.eql(['--some-thing=true']);
-        expect(config.scenarios.length).to.equal(5);
+        expect(config.scenarios.length).to.equal(1);
       });
     });
 
@@ -222,12 +214,8 @@ describe('utils/config', () => {
       return getConfig({ project }).then((config) => {
         expect(config.useVersionCompatibility).to.equal(true);
         expect(config.npmOptions).to.eql(['--whatever=true']);
-        expect(config.scenarios.length).to.equal(6);
+        expect(config.scenarios.length).to.equal(3);
         expect(config.scenarios).to.include.deep.members([
-          {
-            name: 'default',
-            npm: { devDependencies: {} },
-          },
           {
             name: 'ember-2.18.0',
             npm: { devDependencies: { 'ember-source': '2.18.0' } },
