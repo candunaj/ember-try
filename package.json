@@ -29,6 +29,7 @@
     "test": "npm run-script lint && npm run-script node-test"
   },
   "dependencies": {
+    "@embroider/test-setup": "^2.0.2",
     "chalk": "^4.1.2",
     "cli-table3": "^0.6.0",
     "core-object": "^3.1.5",

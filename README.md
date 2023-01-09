@@ -71,6 +71,10 @@ Runs `ember test` or the command in config for each version of Ember that is pos
 
 Displays the configuration that will be used. Also takes an optional `--config-path`.
 
+#### `ember try:embroider <safe | optimized>`
+
+Runs embroider-safe or embroider-optimized tests. Configuration is loaded from `ember-try.js` or from `@ember/test-setup`, so embroider-safe and embroider-optimized are not required in `ember-try.js` for tests to run. 
+
 ### Config
 
 ##### versionCompatibility
